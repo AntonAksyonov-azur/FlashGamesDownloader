@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -20,22 +21,7 @@ namespace FlashGamesDownloader
 
         private void btnFind_Click(object sender, EventArgs e)
         {
-            String str = GetHtmlSource(tbAddress.Text);
-
-            if (str == null)
-            {
-                MessageBox.Show("Error! Failed to connect", "Error");
-            }
-            else
-            {
-                String sfwResult = FindSwf(str);
-                if (sfwResult != null)
-                {
-                    WebClient webClient = new WebClient();
-                    webClient.DownloadFile(sfwResult, "file.swf");
-                    MessageBox.Show("Done!", "Done!");
-                }
-            }
+            backgroundWorker.RunWorkerAsync();
         }
 
         private String GetHtmlSource(String address)
@@ -50,19 +36,19 @@ namespace FlashGamesDownloader
             {
                 return null;
             }
-            StreamReader reader = new StreamReader(stream);
+            var reader = new StreamReader(stream);
 
             String source = reader.ReadToEnd();
 
-            return source;   
+            return source;
         }
 
         private String FindSwf(String content)
         {
             String regex = @"(/files/games/[A-Za-z0-9,-]+.swf)";
-            Regex re = new Regex(regex);
+            var re = new Regex(regex);
 
-            var result = re.Matches(content);
+            MatchCollection result = re.Matches(content);
             if (result.Count == 0)
             {
                 MessageBox.Show("Error! No matches", "Error");
@@ -70,6 +56,42 @@ namespace FlashGamesDownloader
             }
 
             return String.Format("http://cache.armorgames.com{0}", result[0]);
+        }
+
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            tsslStatusText.Text = "Соединяемся...";
+            String str = GetHtmlSource(tbAddress.Text);
+
+            if (str == null)
+            {
+                MessageBox.Show("Error! Failed to connect", "Error");
+                backgroundWorker.CancelAsync();
+            }
+            else
+            {
+                tsslStatusText.Text = "Ищем файл...";
+                String sfwResult = FindSwf(str);
+                if (sfwResult != null)
+                {
+                    tsslStatusText.Text = "Файл найден...";
+
+                    DialogResult dr = DialogResult.No;
+                    DoOnUIThread(() => dr = saveFileDialog.ShowDialog());
+                    if (dr == DialogResult.OK)
+                    {
+                        tsslStatusText.Text = "Качаем файл...";
+                        var webClient = new WebClient();
+                        webClient.DownloadFileAsync(new Uri(sfwResult), String.Format("{0}", saveFileDialog.FileName));
+                        //webClient.DownloadProgressChanged += webClient_DownloadProgressChanged;
+                    }
+                }
+            }
+        }
+
+        private void DoOnUIThread(MethodInvoker d)
+        {
+            if (InvokeRequired) { Invoke(d); } else { d(); }
         }
     }
 }

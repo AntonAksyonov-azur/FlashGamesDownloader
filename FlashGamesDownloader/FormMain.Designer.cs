@@ -34,13 +34,14 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.tbResult = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnDownload = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsslStatusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -83,7 +84,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -96,12 +97,12 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Введите адрес";
             // 
-            // progressBar1
+            // progressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 72);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(443, 23);
-            this.progressBar1.TabIndex = 4;
+            this.progressBar.Location = new System.Drawing.Point(12, 72);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(443, 23);
+            this.progressBar.TabIndex = 4;
             // 
             // tbResult
             // 
@@ -159,7 +160,7 @@
             this.Controls.Add(this.btnDownload);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbResult);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbAddress);
             this.Controls.Add(this.btnFind);
@@ -184,13 +185,14 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.TextBox tbResult;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tsslStatusText;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 
