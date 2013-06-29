@@ -55,7 +55,7 @@ namespace FlashGamesDownloader
                 return null;
             }
 
-            return String.Format("http://cache.armorgames.com{0}", result[0]);
+            return String.Format("http://armorgames.com{0}", result[0]);
         }
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
