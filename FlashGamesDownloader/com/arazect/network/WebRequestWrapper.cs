@@ -8,11 +8,24 @@ namespace FlashGamesDownloader.com.arazect.network
     {
         public String GetHtmlPageSource(String address)
         {
+            if (String.IsNullOrEmpty(address))
+            {
+                return null;
+            }
+
+            HttpWebResponse response;
             WebRequest request = WebRequest.Create(address);
             request.Method = "GET";
-
-            Stream stream = request.GetResponse().GetResponseStream();
-
+            try
+            {
+                response = (HttpWebResponse)request.GetResponse();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            var stream = response.GetResponseStream();
+            
             return stream == null 
                 ? null
                 : new StreamReader(stream).ReadToEnd();
