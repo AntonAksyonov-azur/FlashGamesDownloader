@@ -37,15 +37,14 @@ namespace FlashGamesDownloader
 
         #endregion
 
+        #region MenuStrip functions
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void btnFind_Click(object sender, EventArgs e)
-        {
-            backgroundWorker.RunWorkerAsync();
-        }
+        #endregion
 
         #region Background worker
 
@@ -103,6 +102,15 @@ namespace FlashGamesDownloader
                             SetStatusMessage("Файл скачан!");
                         }
                     });
+        }
+
+        #endregion
+
+        #region Buttons
+
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            backgroundWorker.RunWorkerAsync();
         }
 
         #endregion
