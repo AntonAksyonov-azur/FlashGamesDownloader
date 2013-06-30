@@ -69,7 +69,7 @@ namespace FlashGamesDownloader
             }
 
             SetStatusMessage("Ищем файл...");
-            String swfResult = _flashFinder.FindSwf(content, entry.Regex, entry.SiteContentRoot);
+            String swfResult = _flashFinder.FindSwf(content, entry);
             if (UtilityClass.CheckNullValue(swfResult, "Файл не найден!"))
             {
                 AbortAsyncTask("Файл не найден");
