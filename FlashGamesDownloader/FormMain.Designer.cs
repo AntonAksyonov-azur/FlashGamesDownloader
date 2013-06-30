@@ -34,10 +34,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.tbResult = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnDownload = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tsslStatusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
@@ -45,13 +43,14 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокПоддерживаемыхСайтовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnFind
             // 
-            this.btnFind.Location = new System.Drawing.Point(461, 43);
+            this.btnFind.Location = new System.Drawing.Point(461, 47);
             this.btnFind.Name = "btnFind";
             this.btnFind.Size = new System.Drawing.Size(75, 23);
             this.btnFind.TabIndex = 0;
@@ -61,7 +60,7 @@
             // 
             // tbAddress
             // 
-            this.tbAddress.Location = new System.Drawing.Point(12, 46);
+            this.tbAddress.Location = new System.Drawing.Point(12, 49);
             this.tbAddress.Name = "tbAddress";
             this.tbAddress.Size = new System.Drawing.Size(443, 20);
             this.tbAddress.TabIndex = 1;
@@ -73,7 +72,7 @@
             this.справкаToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(550, 24);
+            this.menuStrip.Size = new System.Drawing.Size(552, 24);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -96,22 +95,15 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 30);
+            this.label1.Location = new System.Drawing.Point(9, 33);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.Size = new System.Drawing.Size(140, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Введите адрес";
-            // 
-            // progressBar
-            // 
-            this.progressBar.Location = new System.Drawing.Point(12, 72);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(443, 23);
-            this.progressBar.TabIndex = 4;
+            this.label1.Text = "Адрес исходной страницы";
             // 
             // tbResult
             // 
-            this.tbResult.Location = new System.Drawing.Point(12, 117);
+            this.tbResult.Location = new System.Drawing.Point(9, 88);
             this.tbResult.Name = "tbResult";
             this.tbResult.ReadOnly = true;
             this.tbResult.Size = new System.Drawing.Size(443, 20);
@@ -120,28 +112,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 101);
+            this.label2.Location = new System.Drawing.Point(9, 72);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(119, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Файл для скачивания";
             // 
-            // btnDownload
-            // 
-            this.btnDownload.Location = new System.Drawing.Point(461, 115);
-            this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(75, 23);
-            this.btnDownload.TabIndex = 7;
-            this.btnDownload.Text = "Скачать";
-            this.btnDownload.UseVisualStyleBackColor = true;
-            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsProgressBar,
             this.tsslStatusText});
-            this.statusStrip.Location = new System.Drawing.Point(0, 148);
+            this.statusStrip.Location = new System.Drawing.Point(0, 119);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(550, 22);
+            this.statusStrip.Size = new System.Drawing.Size(552, 22);
             this.statusStrip.TabIndex = 8;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -174,7 +158,7 @@
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
             this.оПрограммеToolStripMenuItem.Text = "&О программе...";
             // 
             // списокПоддерживаемыхСайтовToolStripMenuItem
@@ -184,16 +168,19 @@
             this.списокПоддерживаемыхСайтовToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
             this.списокПоддерживаемыхСайтовToolStripMenuItem.Text = "&Список поддерживаемых сайтов...";
             // 
+            // tsProgressBar
+            // 
+            this.tsProgressBar.Name = "tsProgressBar";
+            this.tsProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 170);
+            this.ClientSize = new System.Drawing.Size(552, 141);
             this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.btnDownload);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbResult);
-            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbAddress);
             this.Controls.Add(this.btnFind);
@@ -220,10 +207,8 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.TextBox tbResult;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tsslStatusText;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
@@ -231,6 +216,7 @@
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокПоддерживаемыхСайтовToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripProgressBar tsProgressBar;
     }
 }
 

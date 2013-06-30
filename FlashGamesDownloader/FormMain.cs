@@ -54,17 +54,17 @@ namespace FlashGamesDownloader
 
             SetStatusMessage("Соединяемся...");
             String content = _webRequestWrapper.GetHtmlPageSource(url);
-            if (UtilityClass.CheckNullValue(content, "Ошибка подключения"))
+            if (UtilityClass.CheckNullValue(content, "Ошибка подключения!\nАдрес введен неправильно либо сайт недоступен."))
             {
-                backgroundWorker.CancelAsync();
+                AbortAsyncTask("Ошибка подключения");
                 return;
             }
 
             SetStatusMessage("Проверяем записи в конфигурации...");
             FlashSiteEntry entry = _flashFinder.DetermineConfigurationEntry(_flashConfiguration, url);
-            if (UtilityClass.CheckNullValue(entry, "Неизвестный сайт. Операция отклонена"))
+            if (UtilityClass.CheckNullValue(entry, "Неизвестный сайт. Операция отклонена."))
             {
-                backgroundWorker.CancelAsync();
+                AbortAsyncTask("Ошибка подключения");
                 return;
             }
 
@@ -73,8 +73,7 @@ namespace FlashGamesDownloader
 
             if (UtilityClass.CheckNullValue(swfResult, "Файл не найден!"))
             {
-                backgroundWorker.CancelAsync();
-                SetStatusMessage("Файл не найден");
+                AbortAsyncTask("Файл не найден");
                 return;
             }
 
@@ -96,7 +95,7 @@ namespace FlashGamesDownloader
             _formMethodInvoker.DoOnUiThread(
                 () =>
                     {
-                        progressBar.Value = e.ProgressPercentage;
+                        tsProgressBar.Value = e.ProgressPercentage;
                         if (e.ProgressPercentage == 100)
                         {
                             SetStatusMessage("Файл скачан!");
@@ -120,6 +119,12 @@ namespace FlashGamesDownloader
         private void SetStatusMessage(String message)
         {
             _formMethodInvoker.DoOnUiThread(() => tsslStatusText.Text = message);
+        }
+
+        private void AbortAsyncTask(String statusMessage)
+        {
+            SetStatusMessage(statusMessage);
+            backgroundWorker.CancelAsync();
         }
 
         #endregion
