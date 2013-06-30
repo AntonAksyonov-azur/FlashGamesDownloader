@@ -33,17 +33,17 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.списокПоддерживаемыхСайтовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.tbResult = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.tsProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.tsslStatusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.списокПоддерживаемыхСайтовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -88,9 +88,31 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.exitToolStripMenuItem.Text = "&Выход";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // справкаToolStripMenuItem
+            // 
+            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.списокПоддерживаемыхСайтовToolStripMenuItem,
+            this.оПрограммеToolStripMenuItem});
+            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.справкаToolStripMenuItem.Text = "&Справка";
+            // 
+            // списокПоддерживаемыхСайтовToolStripMenuItem
+            // 
+            this.списокПоддерживаемыхСайтовToolStripMenuItem.Name = "списокПоддерживаемыхСайтовToolStripMenuItem";
+            this.списокПоддерживаемыхСайтовToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.списокПоддерживаемыхСайтовToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
+            this.списокПоддерживаемыхСайтовToolStripMenuItem.Text = "&Список поддерживаемых сайтов...";
+            // 
+            // оПрограммеToolStripMenuItem
+            // 
+            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
+            this.оПрограммеToolStripMenuItem.Text = "&О программе...";
             // 
             // label1
             // 
@@ -129,6 +151,11 @@
             this.statusStrip.TabIndex = 8;
             this.statusStrip.Text = "statusStrip1";
             // 
+            // tsProgressBar
+            // 
+            this.tsProgressBar.Name = "tsProgressBar";
+            this.tsProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
             // tsslStatusText
             // 
             this.tsslStatusText.Name = "tsslStatusText";
@@ -140,38 +167,12 @@
             this.backgroundWorker.WorkerReportsProgress = true;
             this.backgroundWorker.WorkerSupportsCancellation = true;
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
             // saveFileDialog
             // 
             this.saveFileDialog.DefaultExt = "*.swf";
             this.saveFileDialog.Filter = "Flash games|*.swf";
-            // 
-            // справкаToolStripMenuItem
-            // 
-            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.списокПоддерживаемыхСайтовToolStripMenuItem,
-            this.оПрограммеToolStripMenuItem});
-            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.справкаToolStripMenuItem.Text = "&Справка";
-            // 
-            // оПрограммеToolStripMenuItem
-            // 
-            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
-            this.оПрограммеToolStripMenuItem.Text = "&О программе...";
-            // 
-            // списокПоддерживаемыхСайтовToolStripMenuItem
-            // 
-            this.списокПоддерживаемыхСайтовToolStripMenuItem.Name = "списокПоддерживаемыхСайтовToolStripMenuItem";
-            this.списокПоддерживаемыхСайтовToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.списокПоддерживаемыхСайтовToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
-            this.списокПоддерживаемыхСайтовToolStripMenuItem.Text = "&Список поддерживаемых сайтов...";
-            // 
-            // tsProgressBar
-            // 
-            this.tsProgressBar.Name = "tsProgressBar";
-            this.tsProgressBar.Size = new System.Drawing.Size(100, 16);
             // 
             // FormMain
             // 

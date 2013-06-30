@@ -64,21 +64,19 @@ namespace FlashGamesDownloader
             FlashSiteEntry entry = _flashFinder.DetermineConfigurationEntry(_flashConfiguration, url);
             if (UtilityClass.CheckNullValue(entry, "Неизвестный сайт. Операция отклонена."))
             {
-                AbortAsyncTask("Ошибка подключения");
+                AbortAsyncTask("Неизвестный сайт");
                 return;
             }
 
             SetStatusMessage("Ищем файл...");
             String swfResult = _flashFinder.FindSwf(content, entry.Regex, entry.SiteContentRoot);
-
             if (UtilityClass.CheckNullValue(swfResult, "Файл не найден!"))
             {
                 AbortAsyncTask("Файл не найден");
                 return;
             }
 
-            SetStatusMessage("Файл найден...");
-
+            SetStatusMessage("Файл найден. Инициируем загрузку...");
             var dr = DialogResult.No;
             _formMethodInvoker.DoOnUiThread(() => dr = saveFileDialog.ShowDialog());
             if (dr == DialogResult.OK)
@@ -88,6 +86,17 @@ namespace FlashGamesDownloader
                 webClient.DownloadFileAsync(new Uri(swfResult), String.Format("{0}", saveFileDialog.FileName));
                 webClient.DownloadProgressChanged += webClient_DownloadProgressChanged;
             }
+            else
+            {
+                SetStatusMessage("Вы отменили загрузку файла");
+            }
+
+            e.Result = swfResult;
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            tbResult.Text = (String) e.Result;
         }
 
         private void webClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -128,5 +137,7 @@ namespace FlashGamesDownloader
         }
 
         #endregion
+
+
     }
 }
