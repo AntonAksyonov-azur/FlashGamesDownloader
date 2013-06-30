@@ -50,6 +50,8 @@
     <Compile Include="com\arazect\flash\FlashFinder.cs" />
     <Compile Include="com\arazect\configuration\FlashConfiguration.cs" />
     <Compile Include="com\arazect\network\WebRequestWrapper.cs" />
+    <Compile Include="com\arazect\utility\FormMethodInvoker.cs" />
+    <Compile Include="com\arazect\utility\UtilityClass.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -15,8 +15,8 @@ namespace FlashGamesDownloader.com.arazect.configuration
                         {
                             SiteName = "Armor Games",
                             Regex = @"(/files/games/[A-Za-z0-9,-]+.swf)",
-                            SiteRootPath = "http://armorgames.com",
-                            SiteContentPath = "http://armorgames.com"
+                            SiteRoot = "http://armorgames.com",
+                            SiteContentRoot = "http://armorgames.com"
                         }
                 };
         }
@@ -25,8 +25,8 @@ namespace FlashGamesDownloader.com.arazect.configuration
     public class FlashSiteEntry
     {
         public String Regex;
-        public String SiteRootPath;
-        public String SiteContentPath;
+        public String SiteRoot;
+        public String SiteContentRoot;
         public String SiteName;
     }
 }

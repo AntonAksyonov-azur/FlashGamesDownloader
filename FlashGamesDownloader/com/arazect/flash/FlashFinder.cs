@@ -19,7 +19,7 @@ namespace FlashGamesDownloader.com.arazect.flash
 
         public FlashSiteEntry DetermineConfigurationEntry(FlashConfiguration config, String siteAddressString)
         {
-            return config.Data.FirstOrDefault(entry => siteAddressString.StartsWith(entry.SiteRootPath));
+            return config.Data.FirstOrDefault(entry => siteAddressString.StartsWith(entry.SiteRoot));
         }
     }
 }

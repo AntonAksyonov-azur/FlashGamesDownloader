@@ -1,18 +1,41 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using FlashGamesDownloader.com.arazect.configuration;
+using FlashGamesDownloader.com.arazect.flash;
+using FlashGamesDownloader.com.arazect.network;
+using FlashGamesDownloader.com.arazect.utility;
 
 namespace FlashGamesDownloader
 {
     public partial class FormMain : Form
     {
+        private readonly FlashFinder _flashFinder = new FlashFinder();
+        private readonly FormMethodInvoker _formMethodInvoker;
+        private readonly WebRequestWrapper _webRequestWrapper = new WebRequestWrapper();
+        private FlashConfiguration _flashConfiguration;
+
         public FormMain()
         {
             InitializeComponent();
+
+            _formMethodInvoker = new FormMethodInvoker(this);
         }
+
+        #region Configuration control
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            _flashConfiguration = ConfigurationLoader.LoadConfiguration<FlashConfiguration>("config.xml");
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ConfigurationLoader.SaveConfiguration(_flashConfiguration, "config.xml");
+        }
+
+        #endregion
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -24,74 +47,73 @@ namespace FlashGamesDownloader
             backgroundWorker.RunWorkerAsync();
         }
 
-        private String GetHtmlSource(String address)
-        {
-            WebRequest request = WebRequest.Create(address);
-            request.Method = "GET";
-
-            WebResponse response = request.GetResponse();
-            Stream stream = response.GetResponseStream();
-
-            if (stream == null)
-            {
-                return null;
-            }
-            var reader = new StreamReader(stream);
-
-            String source = reader.ReadToEnd();
-
-            return source;
-        }
-
-        private String FindSwf(String content)
-        {
-            String regex = @"(/files/games/[A-Za-z0-9,-]+.swf)";
-            var re = new Regex(regex);
-
-            MatchCollection result = re.Matches(content);
-            if (result.Count == 0)
-            {
-                MessageBox.Show("Error! No matches", "Error");
-                return null;
-            }
-
-            return String.Format("http://armorgames.com{0}", result[0]);
-        }
+        #region Background worker
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            tsslStatusText.Text = "Соединяемся...";
-            String str = GetHtmlSource(tbAddress.Text);
+            String url = tbAddress.Text;
 
-            if (str == null)
+            SetStatusMessage("Соединяемся...");
+            String content = _webRequestWrapper.GetHtmlPageSource(url);
+            if (UtilityClass.CheckNullValue(content, "Ошибка подключения"))
             {
-                MessageBox.Show("Error! Failed to connect", "Error");
                 backgroundWorker.CancelAsync();
+                return;
             }
-            else
+
+            SetStatusMessage("Проверяем записи в конфигурации...");
+            FlashSiteEntry entry = _flashFinder.DetermineConfigurationEntry(_flashConfiguration, url);
+            if (UtilityClass.CheckNullValue(entry, "Неизвестный сайт. Операция отклонена"))
             {
-                tsslStatusText.Text = "Ищем файл...";
-                String sfwResult = FindSwf(str);
-                if (sfwResult != null)
-                {
-                    tsslStatusText.Text = "Файл найден...";
+                backgroundWorker.CancelAsync();
+                return;
+            }
 
-                    DialogResult dr = DialogResult.No;
-                    DoOnUIThread(() => dr = saveFileDialog.ShowDialog());
-                    if (dr == DialogResult.OK)
-                    {
-                        tsslStatusText.Text = "Качаем файл...";
-                        var webClient = new WebClient();
-                        webClient.DownloadFileAsync(new Uri(sfwResult), String.Format("{0}", saveFileDialog.FileName));
-                        //webClient.DownloadProgressChanged += webClient_DownloadProgressChanged;
-                    }
-                }
+            SetStatusMessage("Ищем файл...");
+            String swfResult = _flashFinder.FindSwf(content, entry.Regex, entry.SiteContentRoot);
+
+            if (UtilityClass.CheckNullValue(swfResult, "Файл не найден!"))
+            {
+                backgroundWorker.CancelAsync();
+                SetStatusMessage("Файл не найден");
+                return;
+            }
+
+            SetStatusMessage("Файл найден...");
+
+            var dr = DialogResult.No;
+            _formMethodInvoker.DoOnUiThread(() => dr = saveFileDialog.ShowDialog());
+            if (dr == DialogResult.OK)
+            {
+                SetStatusMessage("Качаем файл...");
+                var webClient = new WebClient();
+                webClient.DownloadFileAsync(new Uri(swfResult), String.Format("{0}", saveFileDialog.FileName));
+                webClient.DownloadProgressChanged += webClient_DownloadProgressChanged;
             }
         }
 
-        private void DoOnUIThread(MethodInvoker d)
+        private void webClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            if (InvokeRequired) { Invoke(d); } else { d(); }
+            _formMethodInvoker.DoOnUiThread(
+                () =>
+                    {
+                        progressBar.Value = e.ProgressPercentage;
+                        if (e.ProgressPercentage == 100)
+                        {
+                            SetStatusMessage("Файл скачан!");
+                        }
+                    });
         }
+
+        #endregion
+
+        #region Additional functions
+
+        private void SetStatusMessage(String message)
+        {
+            _formMethodInvoker.DoOnUiThread(() => tsslStatusText.Text = message);
+        }
+
+        #endregion
     }
 }
