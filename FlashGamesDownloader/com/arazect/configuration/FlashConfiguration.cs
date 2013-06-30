@@ -22,7 +22,7 @@ namespace FlashGamesDownloader.com.arazect.configuration
                     new FlashSiteEntry
                         {
                             SiteName = "Kongregate.com",
-                            Regex = @"(http(%3A%2F%2F|:\/\/)chat\.kongregate\.com(%2F|\/)gamez[A-Za-z0-9-_%\.\/]+\.swf)",
+                            Regex = @"(http(%3A%2F%2F|:\/\/)[A-Za-z]+\.kongregate\.com(%2F|\/)gamez[A-Za-z0-9-_%\.\/]+\.swf)",
                             SiteRoot = "http://www.kongregate.com",
                             SiteContentRoot = "",
                             ResultIsUrlEncoded = true
