@@ -26,6 +26,14 @@ namespace FlashGamesDownloader.com.arazect.configuration
                             SiteRoot = "http://www.kongregate.com",
                             SiteContentRoot = "",
                             ResultIsUrlEncoded = true
+                        },
+                    new FlashSiteEntry
+                        {
+                            SiteName = "Flashgames247.com",
+                            Regex = @"\/games\/[A-Za-z0-9-_%\.\/]+\.swf)",
+                            SiteRoot = "http://www.flashgames247.com",
+                            SiteContentRoot = "http://www.flashgames247.com",
+                            ResultIsUrlEncoded = false
                         }
                 };
         }
