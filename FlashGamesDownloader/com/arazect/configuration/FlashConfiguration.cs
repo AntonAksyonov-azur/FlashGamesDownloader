@@ -13,8 +13,8 @@ namespace FlashGamesDownloader.com.arazect.configuration
                 {
                     new FlashSiteEntry
                         {
-                            SiteName = "Armor Games",
-                            Regex = @"(/files/games/[A-Za-z0-9,-]+\.swf)",
+                            SiteName = "ArmorGames.com",
+                            Regex = @"(\/files\/games/[A-Za-z0-9,-]+\.swf)",
                             SiteRoot = "http://armorgames.com",
                             SiteContentRoot = "http://armorgames.com",
                             ResultIsUrlEncoded = false
